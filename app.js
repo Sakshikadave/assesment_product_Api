@@ -5,7 +5,9 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const path = require("path");
 const morgan = require("morgan");
+const mysql = require("./config/db");
 
+//middlwares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("public", express.static(path.join(__dirname, "public")));
@@ -13,11 +15,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-//middlwares
+//api paths
+app.use("/api/user", require("./routes/user"));
 
 //test
 app.get("/", (req, res) => {
-  res.send("Working Properly");
+  res.status(202).send("Working Properly");
 });
 
 const port = process.env.PORT || 4000;
