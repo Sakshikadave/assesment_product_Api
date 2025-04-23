@@ -9,7 +9,7 @@ const {
   generateToken,
   generateRefreshToken,
 } = require("../middlware/refreshToken");
-const { fetchuser } = require("../middlware/fetchuser");
+const verifyToken = require("../middlware/fetchuser");
 
 const emailValidator = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -78,7 +78,54 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/userprofile", fetchuser, (req, res) => {
+router.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please provide both email and password" });
+  }
+  pool.query(
+    "SELECT * FROM users WHERE email = ?",
+    [email],
+    (err, UserRows) => {
+      if (err) {
+        console.error("Error checking mobile:", err);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+
+      if (UserRows.length === 0) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      const User = UserRows[0];
+
+      bcrypt.compare(password, User.password, (bcryptErr, passwordMatch) => {
+        if (bcryptErr) {
+          console.error("Error comparing passwords:", bcryptErr);
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
+
+        if (passwordMatch) {
+          const token = generateToken(User.id);
+          const refreshToken = generateRefreshToken(User.id);
+          res.cookie("refreshToken", refreshToken, { httpOnly: true });
+
+          res.json({
+            token,
+            message: "Login successful",
+            data: UserRows,
+          });
+        } else {
+          res.status(401).json({ error: "Invalid credentials" });
+        }
+      });
+    }
+  );
+});
+
+router.get("/userprofile", verifyToken, (req, res) => {
   const authenticateduserId = req.userId;
 
   pool.query(
@@ -126,7 +173,7 @@ router.get("/getallusers", (req, res) => {
   }
 });
 
-router.delete("/delete/:id", fetchuser, (req, res) => {
+router.delete("/delete/:id", verifyToken, (req, res) => {
   const { id } = req.params;
   pool.query("DELETE FROM user WHERE id = ?", id, (err, result) => {
     if (err) {

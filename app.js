@@ -17,6 +17,7 @@ app.use(morgan("dev"));
 
 //api paths
 app.use("/api/user", require("./routes/user"));
+app.use("/api/category", require("./routes/Category"));
 
 //test
 app.get("/", (req, res) => {

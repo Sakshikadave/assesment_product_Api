@@ -1,52 +1,41 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
-const conn = require("../config/db");
 
-const fetchuser = (req, res, next) => {
-  const token = req.get("Authorization") || req.cookies.Authorization;
-  if (!token) {
-    return res.status(401).json({ error: "Invalid token, please login again" });
+const verifyToken = (req, res, next) => {
+  const authHeader = req.header("Authorization");
+
+  console.log("Request headers:", req.headers);
+  console.log("Received Authorization header:", authHeader);
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res
+      .status(401)
+      .json({ message: "Session has expired, please re-login." });
   }
 
-  jwt.verify(token, JWT_SECRET, (error, data) => {
-    if (error) {
-      if (error.name === "TokenExpiredError") {
-        res.clearCookie("Authorization");
-        return res.status(419).json({
-          error: "Your Login Session has expired, please login again",
-        });
-      }
+  const token = authHeader.split(" ")[1];
 
-      console.log("Error with token:", error.message);
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Session has expired, please re-login." });
+  }
 
-      res.clearCookie("Authorization");
-      return res
-        .status(419)
-        .json({ error: "Invalid token, please login again" });
-    }
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    console.log("Decoded token:", decoded);
 
-    const selectQuery = "SELECT * FROM users WHERE id = ?";
-    conn.query(selectQuery, [data.userId], (err, rows) => {
-      if (err) {
-        console.error("Error querying database:", err);
-        return res.status(500).json({ error: "Internal Server Error" });
-      }
+    req.userId = decoded.id;
+    console.log("Token verified successfully. User ID:", decoded.id);
 
-      if (rows.length === 0) {
-        res.clearCookie("Authorization");
-        return res.status(404).json({ error: "user not found" });
-      }
-
-      req.user = {
-        userName: rows[0].fullname,
-        role: rows[0].role,
-        ...rows[0],
-      };
-      req.userId = data.userId;
-
-      next();
+    next();
+  } catch (error) {
+    console.error("Error verifying token:", error.message);
+    return res.status(401).json({
+      message:
+        "Please login again. Your session has expired. Logout and log in again.",
     });
-  });
+  }
 };
 
-module.exports = { fetchuser };
+module.exports = verifyToken;
