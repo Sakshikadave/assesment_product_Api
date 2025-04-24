@@ -4,7 +4,7 @@ const pool = require("../config/db");
 const { v4: uuidv4 } = require("uuid");
 const verifyToken = require("../middlware/fetchuser");
 
-router.post("/addcategories", (req, res) => {
+router.post("/addcategories", verifyToken, (req, res) => {
   const { name } = req.body;
   const uniqueId = uuidv4();
   pool.query(

@@ -16,3 +16,17 @@ CREATE TABLE categories (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  productname VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  description TEXT,
+  category VARCHAR(100),
+  category_uid VARCHAR(50),
+  image VARCHAR(50),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
