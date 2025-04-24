@@ -1,6 +1,6 @@
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
-const { maxImageSize, maxDocumentSize } = require("../config"); // Typo in 'confing' should be 'config'
+const { maxImageSize, maxDocumentSize } = require("../config");
 const path = require("path");
 const fs = require("fs");
 const createUploadsDir = () => {
