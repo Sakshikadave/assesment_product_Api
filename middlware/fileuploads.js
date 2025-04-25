@@ -1,48 +1,37 @@
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
-const { maxImageSize, maxDocumentSize } = require("../config");
 const path = require("path");
 const fs = require("fs");
-const createUploadsDir = () => {
-  const uploadDir = path.join(__dirname, "../public/uploads");
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-  }
-  return uploadDir;
-};
+
+const maxDocumentSize = 10 * 1024 * 1024;
 
 const productStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = createUploadsDir();
-    cb(null, uploadPath);
-  },
   filename: (req, file, cb) => {
-    const fileExt = path.extname(file.originalname);
-    const fileName = `product-${uuidv4()}-${Date.now()}${fileExt.toLowerCase()}`;
-    cb(null, fileName);
+    const fileName = "-" + file.originalname.toLowerCase().split(" ").join("-");
+    cb(null, "product-" + uuidv4() + fileName);
+  },
+  destination: (req, file, cb) => {
+    cb(null, "./public/uploads/");
   },
 });
 
-const allowedImageMimeTypes = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "application/pdf",
-];
-
-const fileFilter = (req, file, cb) => {
-  if (allowedImageMimeTypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error("Invalid file format"), false);
-  }
-};
-
 const saveproducts = multer({
   storage: productStorage,
-  limits: { fileSize: maxImageSize },
-  fileFilter: fileFilter,
-}).fields([{ name: "image", maxCount: 1 }]);
+  limits: { fileSize: maxDocumentSize },
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/jpeg" ||
+      file.mimetype === "application/pdf"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return null;
+    }
+  },
+}).single("images");
 
 module.exports = {
   saveproducts,

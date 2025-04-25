@@ -10,16 +10,20 @@ const formidable = require("formidable");
 const fileUpload = require("express-fileupload");
 router.use(fileUpload());
 const uploadDirectory = path.join(__dirname, "../public/uploads");
+const multer = require("multer");
 
-router.post("/addproduct", verifyToken, saveproducts, async (req, res) => {
-  try {
-    console.log("Uploaded Files:", req.files);
-    console.log("Request Body:", req.body);
+router.post("/addproduct", verifyToken, (req, res) => {
+  saveproducts(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      console.error("Multer error:", err);
+      return res.status(400).json({ error: `Multer error: ${err.message}` });
+    } else if (err) {
+      console.error("Unexpected upload error:", err);
+      return res.status(400).json({ error: `Upload error: ${err.message}` });
+    }
 
-    const authenticatedUserId = req.userId;
-
-    if (!req.body) {
-      return res.status(400).json({ error: "Missing form data" });
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
     }
 
     const {
@@ -31,49 +35,63 @@ router.post("/addproduct", verifyToken, saveproducts, async (req, res) => {
       category_uid,
     } = req.body;
 
-    const fileFields = ["image"];
+    if (!req.file) {
+      return res.status(400).json({ error: "images file is required." });
+    }
+
     const url = req.protocol + "://" + req.get("host");
+    const imagesUrl = `${url}/uploads/${req.file.filename}`;
+    const userId = req.userId;
 
-    const filePaths = fileFields.reduce((paths, field) => {
-      paths[field] = req.files?.[field]?.[0]
-        ? url + "/uploads/" + req.files[field][0].filename
-        : null;
-      return paths;
-    }, {});
+    connection.getConnection((err, conn) => {
+      if (err) {
+        console.error("Database connection error: ", err);
+        return res.status(500).json({ error: "Database connection failed." });
+      }
 
-    const query = `
-        INSERT INTO products (
-          user_id,  productname, quantity,price,description,category,category_uid, image
-        ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)
+      const query = `
+        INSERT INTO products 
+        (user_id, productname, quantity, price, description, category, category_uid, images) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `;
 
-    const values = [
-      authenticatedUserId,
-      productname,
-      quantity,
-      price,
-      description,
-      category,
-      category_uid,
-      filePaths.image,
-    ];
+      const values = [
+        userId,
+        productname,
+        quantity,
+        price,
+        description,
+        category,
+        category_uid,
+        imagesUrl,
+      ];
 
-    const [insertResult] = await connection.promise().query(query, values);
+      conn.execute(query, values, (err, results) => {
+        conn.release();
 
-    res.status(200).json({
-      message: "Product added successfully.",
-      data: {
-        id: insertResult.insertId,
-        ...req.body,
-        ...filePaths,
-      },
+        if (err) {
+          console.error("Query execution error: ", err);
+          return res.status(500).json({ error: "Failed to insert product." });
+        }
+
+        return res.status(200).json({
+          status: "success",
+          message: "Product added successfully",
+          data: {
+            id: results.insertId,
+            user_id: userId,
+            productname,
+            quantity,
+            price,
+            description,
+            category,
+            category_uid,
+            images: imagesUrl,
+          },
+        });
+      });
     });
-  } catch (err) {
-    console.error("Error processing request:", err.sqlMessage || err.message);
-    res.status(500).json({
-      error: "An error occurred while processing your request.",
-    });
-  }
+  });
 });
 
 //excel
@@ -112,7 +130,7 @@ router.post("/addexcelproducts/excel", (req, res) => {
         const promises = excelData.map((row) => {
           return new Promise((resolve, reject) => {
             connection.execute(
-              "INSERT INTO products (productname, quantity, price, description, category, category_uid, image) VALUES (?, ?, ?, ?, ?, ?, ?)",
+              "INSERT INTO products (productname, quantity, price, description, category, category_uid, images) VALUES (?, ?, ?, ?, ?, ?, ?)",
               [
                 row.productname || null,
                 row.quantity || 0,
@@ -120,7 +138,7 @@ router.post("/addexcelproducts/excel", (req, res) => {
                 row.description || null,
                 row.category || null,
                 row.category_uid || null,
-                row.image || "",
+                row.images || "",
               ],
               (err, results) => {
                 if (err) {
@@ -135,7 +153,7 @@ router.post("/addexcelproducts/excel", (req, res) => {
                     description: row.description,
                     category: row.category,
                     category_uid: row.category_uid,
-                    image: row.image || "",
+                    images: row.images || "",
                   });
                   resolve();
                 }
@@ -255,7 +273,7 @@ router.delete("/deleteproducts/:id", verifyToken, (req, res) => {
 router.put("/updateproducts/:id", verifyToken, (req, res) => {
   saveproducts(req, res, (err) => {
     if (err) {
-      console.error("Image upload error:", err.message);
+      console.error("images upload error:", err.message);
       return res.status(400).json({ error: err.message });
     }
 
@@ -270,7 +288,7 @@ router.put("/updateproducts/:id", verifyToken, (req, res) => {
     const productsId = req.params.id;
 
     const url = req.protocol + "://" + req.get("host");
-    const imageUrl = url + "/uploads/" + req.file.filename;
+    const imagesUrl = url + "/uploads/" + req.file.filename;
 
     connection.getConnection((err, connection) => {
       if (err) {
@@ -279,7 +297,7 @@ router.put("/updateproducts/:id", verifyToken, (req, res) => {
       }
 
       connection.execute(
-        "UPDATE products SET productname=?, quantity=?,price=?,description=?, category=?, category_uid=?,image=? WHERE id=?",
+        "UPDATE products SET productname=?, quantity=?,price=?,description=?, category=?, category_uid=?,images=? WHERE id=?",
         [
           productname,
           quantity,
@@ -314,7 +332,7 @@ router.put("/updateproducts/:id", verifyToken, (req, res) => {
               description,
               category,
               category_uid,
-              image: url + "/uploads/" + req.file.filename,
+              images: url + "/uploads/" + req.file.filename,
             },
           });
         }
@@ -370,7 +388,7 @@ router.get("/searchproducts", verifyToken, (req, res) => {
   const query =
     "SELECT * FROM products WHERE productname LIKE ? OR price LIKE ? OR id LIKE ?";
 
-  conn.query(
+  connection.query(
     query,
     ["%" + search + "%", "%" + search + "%", "%" + search + "%"],
     (err, results) => {

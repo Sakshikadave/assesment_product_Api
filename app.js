@@ -9,9 +9,8 @@ const mysql = require("./config/db");
 
 //middlwares
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use("public", express.static(path.join(__dirname, "public")));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
