@@ -1,0 +1,811 @@
+{
+	"info": {
+		"_postman_id": "3b59afae-98a5-4d5b-943a-04957ef99014",
+		"name": "product",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23443703",
+		"_collection_link": "https://lively-desert-985982.postman.co/workspace/assesment_productApi~171475e7-5bec-444e-aa56-e5a1a18fd394/collection/23443703-3b59afae-98a5-4d5b-943a-04957ef99014?action=share&source=collection_link&creator=23443703"
+	},
+	"item": [
+		{
+			"name": "addproduct",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTk0NjIzLCJleHAiOjE3NDU1OTgyMjMsInN1YiI6InJlZnJlc2gifQ.z60j5kfwTRntpY01nRyLF443UIHaso-DIokPS7B2Vtc",
+						"name": "cookie",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"name": "cache-control",
+						"type": "text"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "<calculated when request is sent>",
+						"name": "postman-token",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data; boundary=<calculated when request is sent>",
+						"name": "content-type",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"name": "content-length",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"name": "host",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.39.1",
+						"name": "user-agent",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"name": "accept",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"name": "accept-encoding",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"name": "connection",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTk1MTcxLCJleHAiOjE3NDU1OTg3NzF9.-OjDUdbVwxyDvtD-ilhHJVbnfpdzzpsUKglVHxkpxgE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "productname",
+							"value": "Wireless Mouse",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "150",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "599.99",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Ergonomic wireless mouse with adjustable DPI",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "Electronics",
+							"type": "text"
+						},
+						{
+							"key": "category_uid",
+							"value": "CAT001",
+							"type": "text"
+						}
+					],
+					"options": {
+						"formdata": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/product/addproduct",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"addproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateproduct",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NDM0MTU3LCJleHAiOjE3NDU0Mzc3NTcsInN1YiI6InJlZnJlc2gifQ.cGjpx8E0FAL5ZnQpEyl_bFEYckTulxMJwu2cfzRZNYk",
+						"name": "cookie",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"name": "cache-control",
+						"type": "text"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "<calculated when request is sent>",
+						"name": "postman-token",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data; boundary=<calculated when request is sent>",
+						"name": "content-type",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"name": "content-length",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"name": "host",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.39.1",
+						"name": "user-agent",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"name": "accept",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"name": "accept-encoding",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"name": "connection",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTE2NjE0LCJleHAiOjE3NDU1MjAyMTR9.83yVA_KyeKNtVUN5HMOmlj93ZtOL2dwEOwQ4Uf8kvw4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "productname",
+							"value": "Wireless Mouse",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "150",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "599.99",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Ergonomic wireless mouse with adjustable DPI",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "Electronics",
+							"type": "text"
+						},
+						{
+							"key": "category_uid",
+							"value": "CAT001",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "c:\\Users\\User\\Downloads\\Gayatri Resume.pdf"
+						}
+					],
+					"options": {
+						"formdata": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/product/updateproduct/3",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"updateproduct",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "report",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "adminSave=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM4MzkxNjI4LCJleHAiOjE3Mzg1NjQ0Mjh9.FgpzXwGSnS4KLsR21Wd8Ig0r-fRg82J1gv7yGylZtak; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzQ1MjIwNzU0LCJleHAiOjE3NDUyMjQzNTQsInN1YiI6InJlZnJlc2gifQ.cwBhuMqb6qZKXI2O_ta2jrbW6XpPCg0A2mxlPm8UOgQ",
+						"name": "cookie",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"name": "cache-control",
+						"type": "text"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "<calculated when request is sent>",
+						"name": "postman-token",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "0",
+						"name": "content-length",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"name": "host",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.39.1",
+						"name": "user-agent",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"name": "accept",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"name": "accept-encoding",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"name": "connection",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NDk0ODI2LCJleHAiOjE3NDU0OTg0MjZ9.ds3wUDrmi3jqYqwLySPFPoNmqbCJFuJMUv3bezUziW0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "excelFile",
+							"type": "file",
+							"src": "c:\\Users\\User\\Downloads\\product_data.xlsx"
+						}
+					],
+					"options": {
+						"formdata": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/product/addexcelproducts/excel",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"addexcelproducts",
+						"excel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "excel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "excelFile",
+							"type": "file",
+							"src": "c:\\Users\\User\\Downloads\\product_data.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4001/api/product/addexcelproducts/excel",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"addexcelproducts",
+						"excel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteproducts",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:4001/api/product/deleteproducts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"deleteproducts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getproducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4001/api/product/getproducts/3",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"getproducts",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getallproducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4001/api/product/getallproduct",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"getallproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4001/api/product/updateproduct/3",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTE3NDk0LCJleHAiOjE3NDU1MjEwOTQsInN1YiI6InJlZnJlc2gifQ.-1fIlZMrzJ3GxahTWBcsP64sGXfPLTEOf2Hp9xlYd0c",
+						"name": "cookie",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"name": "cache-control",
+						"type": "text"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "<calculated when request is sent>",
+						"name": "postman-token",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data; boundary=<calculated when request is sent>",
+						"name": "content-type",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"name": "content-length",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"name": "host",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.39.1",
+						"name": "user-agent",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"name": "accept",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"name": "accept-encoding",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"name": "connection",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTE3NDk0LCJleHAiOjE3NDU1MjEwOTR9.CRrWiW9nuymcGBYWQkt0jrkxQfpq9yugasPjBuAHWUE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "c:\\Users\\User\\Downloads\\Gayatri Resume.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4001/api/product/updateproduct/3",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"updateproduct",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchproducts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTk0NjIzLCJleHAiOjE3NDU1OTgyMjMsInN1YiI6InJlZnJlc2gifQ.z60j5kfwTRntpY01nRyLF443UIHaso-DIokPS7B2Vtc",
+						"name": "cookie",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"name": "cache-control",
+						"type": "text"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "<calculated when request is sent>",
+						"name": "postman-token",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"name": "host",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.39.1",
+						"name": "user-agent",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"name": "accept",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"name": "accept-encoding",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"name": "connection",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTk0NjIzLCJleHAiOjE3NDU1OTgyMjN9.0Gh4MZdIjm-MR4JOEAUttzTNssU_csIPKv3UEOt8aYc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:4001/api/product/searchproducts?search=Smartphone",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"searchproducts"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "Smartphone"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filterByDate",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTk0NjIzLCJleHAiOjE3NDU1OTgyMjMsInN1YiI6InJlZnJlc2gifQ.z60j5kfwTRntpY01nRyLF443UIHaso-DIokPS7B2Vtc",
+						"name": "cookie",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"name": "cache-control",
+						"type": "text"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "<calculated when request is sent>",
+						"name": "postman-token",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"name": "host",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.39.1",
+						"name": "user-agent",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"name": "accept",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"name": "accept-encoding",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"name": "connection",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTk0NjIzLCJleHAiOjE3NDU1OTgyMjN9.0Gh4MZdIjm-MR4JOEAUttzTNssU_csIPKv3UEOt8aYc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:4001/api/product/admfilter?filterByDate=3months",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"admfilter"
+					],
+					"query": [
+						{
+							"key": "filterByDate",
+							"value": "3months"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTk2MTMwLCJleHAiOjE3NDU1OTk3MzAsInN1YiI6InJlZnJlc2gifQ.-x57RV4Ix8A6EZIQVa9MHBpSkXjMhhsHqBqCkqGoCGM",
+						"name": "cookie",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"name": "cache-control",
+						"type": "text"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "<calculated when request is sent>",
+						"name": "postman-token",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data; boundary=<calculated when request is sent>",
+						"name": "content-type",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"name": "content-length",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"name": "host",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.39.1",
+						"name": "user-agent",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"name": "accept",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"name": "accept-encoding",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"name": "connection",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzQ1NTk2MTMwLCJleHAiOjE3NDU1OTk3MzB9.cFwMZKmPXSI5UgkEBeSixHnA6A4GkKUsTUBa-84vDck",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "images",
+							"type": "file",
+							"src": "c:\\Users\\User\\Downloads\\sdsd.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4001/api/product/addproduct",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"product",
+						"addproduct"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
